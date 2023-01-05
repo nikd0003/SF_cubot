@@ -2,6 +2,7 @@ import json
 import requests
 from config import exchanges
 
+
 class APIException(Exception):
     pass
 
