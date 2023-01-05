@@ -10,18 +10,15 @@ class Convertor:
     @staticmethod
     def get_price(base, sym, amount):
         try:
-            base_key = exchanges[base.lower()[0]]
+            base_key = exchanges[base.lower()]
         except KeyError:
             raise APIException(f"Валюта {base} не найдена!")
-
         try:
             sym_key = exchanges[sym.lower()]
         except KeyError:
             raise APIException(f"Валюта {sym} не найдена!")
-
         if base_key == sym_key:
             raise APIException(f'Невозможно перевести одинаковые валюты {base}!')
-        
         try:
             amount = float(amount)
         except ValueError:

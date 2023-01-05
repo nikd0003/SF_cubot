@@ -7,33 +7,35 @@ import traceback
 bot = telebot.TeleBot(TOKEN)
 
 
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=['start', 'help'])  # обработка команд /start и /help
 def start(message: telebot.types.Message):
     text = "Привет! Бот умеет конвертировать курсы валют.\n" \
            "Посмотреть доступные валюты - введите /values\n" \
            "Чтобы конвертировать одну валюту в другую\n" \
            "введите команду в формате:\n" \
-           "[исходная валюта] [конечная валюта] [сумма]\n" \
-           "Всего должно быть 3 разделеннsх пробелом параметра\n" \
-           "без кавычек или скобок.\n" \
+           "[ключ исходной валюты] [ключ конечной валюты] [сумма]\n" \
+           "Всего должно быть 3 разделенных пробелом параметра\n" \
+           "без кавычек и скобок.\n" \
            "Например:\n" \
            "евро рубль 100"
     bot.send_message(message.chat.id, text)
 
 
-@bot.message_handler(commands=['values'])
+@bot.message_handler(commands=['values'])  # обработка команды /values
 def values(message: telebot.types.Message):
     text = '🔄 Валюты, доступные для конвертации и их ключи:\n' \
-           '[Ключ]    ➡    [Валюта]'
+           '[Валюта]    ➡    [Ключ]'
+    # вывод списка доступных к обмену валют
     # for i in exchanges.keys():
-    #    text = '\n'.join((text, i))
+    #     text = '\n'.join((text, i))
     for key, lst in exchanges.items():
-        text += f'\n{key}    ➡    {lst[2]}'
+        text += f'\n{lst}              ➡    {key}'
     bot.reply_to(message, text)
 
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text'])  # обработка конвертации валют
 def converter(message: telebot.types.Message):
+    # принимаем и разбираем запрос на конвертацию, проверяем допустимость ввода
     values = message.text.split(' ')
     try:
         if len(values) != 3:
@@ -48,5 +50,5 @@ def converter(message: telebot.types.Message):
         bot.reply_to(message, answer)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # вход в программу
     bot.polling()
