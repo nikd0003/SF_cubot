@@ -10,7 +10,7 @@ class Convertor:
     @staticmethod
     def get_price(base, sym, amount):
         try:
-            base_key = exchanges[base.lower()]
+            base_key = exchanges[base.lower()[0]]
         except KeyError:
             raise APIException(f"Валюта {base} не найдена!")
 
@@ -30,9 +30,9 @@ class Convertor:
         payload = {}
         headers = {"apikey": "6g61Ns6YurAIOZRSmdWDm33wdm01vaDa"}
         r = requests.request("GET", url, headers=headers, data=payload)
-#        print(r.content)
+        print(r.content)
         resp = json.loads(r.content)
         new_price = resp['quotes'][base_key+sym_key] * amount
         new_price = round(new_price, 3)
-        message =  f"Цена {amount} {base} в {sym} : {new_price}"
+        message = f"Цена {amount} {base} в {sym} : {new_price}"
         return message
