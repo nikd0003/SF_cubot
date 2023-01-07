@@ -1,6 +1,6 @@
 import json
 import requests
-from config import exchanges
+from config import exchanges, APIKEY
 
 
 class APIException(Exception):
@@ -26,7 +26,7 @@ class Convertor:
             raise APIException(f'Не удалось обработать количество {amount}!')
         url = f"https://api.apilayer.com/currency_data/live?source={base_key}&currencies={sym_key}"
         payload = {}
-        headers = {"apikey": "6g61Ns6YurAIOZRSmdWDm33wdm01vaDa"}
+        headers = {"apikey": APIKEY}
         r = requests.request("GET", url, headers=headers, data=payload)
         print(r.content)
         resp = json.loads(r.content)

@@ -13,3 +13,4 @@ exchanges = {
     'вона': 'KRW',
     'иена': 'JPY',
 }
+APIKEY = "6g61Ns6YurAIOZRSmdWDm33wdm01vaDa"

@@ -2,8 +2,6 @@ import telebot
 from extensions import APIException, Convertor
 from config import TOKEN, exchanges
 import traceback
-import json
-import extensions
 
 
 bot = telebot.TeleBot(TOKEN)
@@ -35,17 +33,13 @@ def help_command(message: telebot.types.Message):
 def values(message: telebot.types.Message):
     text = '🔄 Валюты, доступные для конвертации и их ключи:\n' \
            '[Валюта]    ➡    [Ключ]'
-    # вывод списка доступных к обмену валют
-    # for i in exchanges.keys():
-    #     text = '\n'.join((text, i))
     for key, lst in exchanges.items():
         text += f'\n{lst}              ➡    {key}'
     bot.reply_to(message, text)
 
 
 @bot.message_handler(content_types=['text'])  # обработка конвертации валют
-def converter(message: telebot.types.Message):
-    # принимаем и разбираем запрос на конвертацию, проверяем допустимость ввода
+def converter(message: telebot.types.Message):  # принимаем и разбираем запрос на конвертацию, проверка ввода
     values = message.text.split(' ')
     try:
         if len(values) != 3:
@@ -60,6 +54,5 @@ def converter(message: telebot.types.Message):
         bot.reply_to(message, answer)
 
 
-if __name__ == '__main__':  # вход в программу
+if __name__ == '__main__':  # точка входа
     bot.infinity_polling()
-    # bot.polling()
