@@ -2,15 +2,25 @@ import telebot
 from extensions import APIException, Convertor
 from config import TOKEN, exchanges
 import traceback
+import json
+import extensions
 
 
 bot = telebot.TeleBot(TOKEN)
 
 
-@bot.message_handler(commands=['start', 'help'])  # обработка команд /start и /help
-def start(message: telebot.types.Message):
-    text = "Привет! Бот умеет конвертировать курсы валют.\n" \
-           "Посмотреть доступные валюты - введите /values\n" \
+# обработчик команды /start
+@bot.message_handler(commands=['start'])
+def start_command(message: telebot.types.Message):
+    bot.send_message(message.chat.id,
+                     'Здравствуйте! Я могу показать текущие курсы валют.\n' +
+                     'Для отображения доступных валют нажмите /values.\n' +
+                     'Для помощи нажмите /help.')
+
+
+@bot.message_handler(commands=['help'])  # обработка команд /help
+def help_command(message: telebot.types.Message):
+    text = "Посмотреть доступные валюты - введите /values\n" \
            "Чтобы конвертировать одну валюту в другую\n" \
            "введите команду в формате:\n" \
            "[ключ исходной валюты] [ключ конечной валюты] [сумма]\n" \
@@ -51,4 +61,5 @@ def converter(message: telebot.types.Message):
 
 
 if __name__ == '__main__':  # вход в программу
-    bot.polling()
+    bot.infinity_polling()
+    # bot.polling()
