@@ -19,11 +19,11 @@ class Convertor:
         except KeyError:
             raise APIException(f"Валюта {sym} не найдена!")
         if base_key == sym_key:
-            raise APIException(f'Невозможно перевести одинаковые валюты {base}!')
+            raise APIException(f'Перевести одинаковые валюты {base} невозможно!')
         try:
             amount = float(amount)
         except ValueError:
-            raise APIException(f'Не удалось обработать количество {amount}!')
+            raise APIException(f'Количество {amount} не удалось обработать!')
         url = f"https://api.apilayer.com/currency_data/live?source={base_key}&currencies={sym_key}"
         payload = {}
         headers = {"apikey": APIKEY}
