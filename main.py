@@ -15,7 +15,7 @@ def start_command(message: telebot.types.Message):
     bot.send_message(message.chat.id,
                      'Здравствуйте! Я могу показать текущие курсы валют.\n' +
                      'Для отображения доступных валют нажмите /values.\n' +
-                     'Для помощи нажмите /help.')
+                     'Для помощи по запросам нажмите /help.')
 
 
 @bot.message_handler(commands=['help'])  # обработка команд /help
